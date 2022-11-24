@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"outDir": ".",
+		"target": "ES3",
+		"module": "CommonJS",
+		"strict": true,
+		"baseUrl": "src",
+		"rootDir": "src",
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"allowUnusedLabels": false,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"importsNotUsedAsValues": "error"
+	},
+	"exclude": [],
+	"include": [
+		"src/**/*.ts"
+	]
+}
