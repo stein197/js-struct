@@ -92,12 +92,12 @@ export default class Trie {
 		if (!curPrefix)
 			return;
 		curPrefix.__end = false;
-		while (curPrefix && curPrefix.__parent) {
+		while (curPrefix) {
 			curPrefix.__length--;
-			const parentPrefix: Trie = curPrefix.__parent;
+			const parentPrefix: Trie | null = curPrefix.__parent;
 			if (!curPrefix.__length) {
 				curPrefix.__parent = null;
-				delete parentPrefix.__children[curPrefix.__key];
+				delete parentPrefix!.__children[curPrefix.__key];
 			}
 			curPrefix = parentPrefix;
 		}
