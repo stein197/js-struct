@@ -161,4 +161,12 @@ export default class Trie {
 			result.addPrefix(string);
 		return result;
 	}
+
+	/**
+	 * Creates an empty trie.
+	 * @returns An empty trie.
+	 */
+	public static create(): Trie {
+		return new Trie("");
+	}
 }
