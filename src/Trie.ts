@@ -8,15 +8,15 @@ export default class Trie {
 	private __end: boolean = false;
 	private __length: number = 0;
 
-	public constructor() {}
-
 	public *[Symbol.iterator]() {}
 
 	/**
 	 * Searches for a passed string.
 	 * @param prefix String to search.
-	 * @param exact Should the searching be exact. If set to `true` then it will be searched exactly (as a whole word).
-	 *              It will be searched as a simple prefix otherwise.
+	 * @param exact Should the searching be exact. If set to `true` then it will be searched to exactly match the
+	 *              prefix, i.e. the same as if searching for a string in an array of strings. Otherwise, the searching
+	 *              will be performed to search for any string that starts with the specified prefix, i.e. the same as a
+	 *              searching for a string, that starts with a specified substring in an array of strings.
 	 * @returns `true` if the match was found.
 	 * @example
 	 * ```ts
@@ -26,7 +26,7 @@ export default class Trie {
 	 * trie.hasPrefix("app", false);   // true
 	 * ```
 	 */
-	public hasPrefix(prefix: string, exact: boolean): boolean {
+	public hasPrefix(prefix: string, exact: boolean = true): boolean {
 		const p = this.getPrefix(prefix, exact);
 		return p != null && (p.__end || !exact);
 	}
@@ -34,8 +34,10 @@ export default class Trie {
 	/**
 	 * Returns a trie corresponding to the passed prefix.
 	 * @param prefix Prefix to return.
-	 * @param exact Should the searching be exact. If set to `true` then it will be searched exactly (as a whole word).
-	 *              It will be searched as a simple prefix otherwise.
+	 * @param exact Should the searching be exact. If set to `true` then it will be searched to exactly match the
+	 *              prefix, i.e. the same as if searching for a string in an array of strings. Otherwise, the searching
+	 *              will be performed to search for any string that starts with the specified prefix, i.e. the same as a
+	 *              searching for a string, that starts with a specified substring in an array of strings.
 	 * @returns Matched prefix or `null` if there were no matches.
 	 * @example
 	 * ```ts
@@ -45,7 +47,7 @@ export default class Trie {
 	 * trie.getPrefix("app", false);   // Trie (at "app" position)
 	 * ```
 	 */
-	public getPrefix(prefix: string, exact: boolean): Trie | null {
+	public getPrefix(prefix: string, exact: boolean = true): Trie | null {
 		let curPrefix: Trie | null = this;
 		for (const char of prefix) {
 			curPrefix = curPrefix.__children[char];
@@ -55,7 +57,31 @@ export default class Trie {
 		return exact ? (curPrefix.__end ? curPrefix : null) : curPrefix;
 	}
 
-	public addPrefix(prefix: string | Trie, exact: boolean = false): void {}
+	/**
+	 * Adds a prefix to the trie.
+	 * @param prefix Prefix to add.
+	 * @param exact Should the insertion be exact. If set to `true` then the prefix will be inserted as a whole word
+	 *              (just like an adding string to an array).
+	 */
+	public addPrefix(prefix: string, exact: boolean = true): void {
+		if (exact && this.hasPrefix(prefix, true))
+			return;
+		let curPrefix: Trie = this;
+		for (const char of prefix) {
+			if (exact)
+				curPrefix.__length++;
+			if (!curPrefix.__children[char]) {
+				const childPrefix = new Trie();
+				childPrefix.__parent = curPrefix;
+				curPrefix.__children[char] = childPrefix;
+			}
+			curPrefix = curPrefix.__children[char];
+		}
+		if (!exact)
+			return;
+		curPrefix.__length++;
+		curPrefix.__end = true;
+	}
 
 	public removePrefix(prefix: string, exact: boolean = false) {}
 
