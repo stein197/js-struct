@@ -19,8 +19,7 @@ export default class Trie {
 		return this.__length;
 	}
 
-	public constructor(private readonly __key: string = "") {}
-
+	private constructor(private readonly __key: string) {}
 	public *[Symbol.iterator]() {}
 
 	/**
@@ -137,7 +136,7 @@ export default class Trie {
 	 * @returns A trie that contains all strings in {@link data}.
 	 */
 	public static fromArray(data: string[]): Trie {
-		const result = new Trie();
+		const result = new Trie("");
 		for (const string of data)
 			result.addPrefix(string);
 		return result;
