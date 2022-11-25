@@ -42,7 +42,7 @@ export default class Trie {
 	private constructor(private readonly __key: string) {}
 
 	/**
-	 * Iterates over strings.
+	 * Iterates over strings. Words are returning in alphabetical order.
 	 */
 	public *[Symbol.iterator](): Generator<string> {
 		for (const trie of Trie.iterate(this)) {
@@ -153,7 +153,8 @@ export default class Trie {
 	}
 
 	/**
-	 * Returns all words as an array. It's the opposite of {@link Trie.fromArray}.
+	 * Returns all words as an array. It's the opposite of {@link Trie.fromArray}. Words will be returned in
+	 * alphabetical order.
 	 * @returns All words in the trie.
 	 * @example
 	 * ```ts
