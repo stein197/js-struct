@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"outDir": ".",
-		"target": "ES3",
+		"target": "ES5",
 		"module": "CommonJS",
 		"strict": true,
 		"baseUrl": "src",
