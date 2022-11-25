@@ -10,6 +10,8 @@ export default class Trie {
 
 	public constructor() {}
 
+	public *[Symbol.iterator]() {}
+
 	/**
 	 * Searches for a passed string.
 	 * @param prefix String to search.
@@ -64,8 +66,6 @@ export default class Trie {
 	}
 
 	public toArray(): string[] {}
-
-	public forEach(f: (prefix: string) => void): void {} // TODO: Replace with iterator
 
 	public length(): number {}
 

@@ -11,7 +11,10 @@
 		"allowUnusedLabels": false,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
-		"importsNotUsedAsValues": "error"
+		"importsNotUsedAsValues": "error",
+		"lib": [
+			"ES2015"
+		],
 	},
 	"exclude": [],
 	"include": [
