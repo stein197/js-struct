@@ -40,7 +40,21 @@ export default class Trie {
 	}
 
 	private constructor(private readonly __key: string) {}
-	public *[Symbol.iterator]() {}
+
+	/**
+	 * Iterates over strings.
+	 */
+	public *[Symbol.iterator](): Generator<string> {
+		for (const trie of Trie.iterate(this)) {
+			let string = "";
+			let curTrie: Trie | null = trie;
+			while (curTrie) {
+				string = curTrie.__key + string;
+				curTrie = curTrie.__parent;
+			}
+			yield string;
+		}
+	}
 
 	/**
 	 * Searches for a passed string.
@@ -168,5 +182,12 @@ export default class Trie {
 	 */
 	public static create(): Trie {
 		return new Trie("");
+	}
+
+	private static *iterate(trie: Trie): Generator<Trie> {
+		if (trie.__end)
+			yield trie;
+		for (const char in trie.__children)
+			yield* Trie.iterate(trie.__children[char]);
 	}
 }
