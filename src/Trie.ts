@@ -21,8 +21,9 @@ export default class Trie {
 	 * @example
 	 * ```ts
 	 * const trie = Trie.fromArray(["apple"]);
-	 * trie.hasPrefix("app", true);  // false
-	 * trie.hasPrefix("app", false); // true
+	 * trie.hasPrefix("apple", true);  // true
+	 * trie.hasPrefix("app", true);    // false
+	 * trie.hasPrefix("app", false);   // true
 	 * ```
 	 */
 	public hasPrefix(prefix: string, exact: boolean): boolean {
@@ -39,8 +40,9 @@ export default class Trie {
 	 * @example
 	 * ```ts
 	 * const trie = Trie.fromArray(["apple"]);
-	 * trie.getPrefix("app", true);  // null
-	 * trie.getPrefix("app", false); // Trie (at "app" position)
+	 * trie.getPrefix("apple", true);  // Trie (at "apple" position)
+	 * trie.getPrefix("app", true);    // null
+	 * trie.getPrefix("app", false);   // Trie (at "app" position)
 	 * ```
 	 */
 	public getPrefix(prefix: string, exact: boolean): Trie | null {
@@ -66,8 +68,12 @@ export default class Trie {
 	}
 
 	/**
-	 * Returns all words as an array.
+	 * Returns all words as an array. It's the opposite of {@link Trie.fromArray}.
 	 * @returns All words in the trie.
+	 * @example
+	 * ```ts
+	 * Trie.fromArray(["apple"]).toArray(); // ["apple"]
+	 * ```
 	 */
 	public toArray(): string[] {
 		const result = new Array(this.__length);
@@ -80,7 +86,7 @@ export default class Trie {
 	public length(): number {}
 
 	/**
-	 * Creates a trie from a string array. Discards duplicates.
+	 * Creates a trie from a string array. Discards duplicates. The opposite of it is {@link Trie.toArray}
 	 * @param data An array of strings.
 	 * @returns A trie that contains all strings in {@link data}.
 	 */
