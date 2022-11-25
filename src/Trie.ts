@@ -1,5 +1,26 @@
 // TODO: compressing
-// TODO
+/**
+ * Trie data structure. Allows to quickly search, insert and remove strings. Instead of storing strings in an array,
+ * they could be stored in a trie. For example, this array:
+ * ```ts
+ * [
+ * 	"bot",
+ * 	"bottle",
+ * 	"bottom"
+ * ]
+ * ```
+ * will be represented in a trie like this:
+ * ```
+ * B
+ * ╚═ O
+ *    ╚═ T
+ *       ╚═ T
+ *          ╠═ O
+ *          ║  ╚═ M
+ *          ╚═ L
+ *             ╚═ E
+ * ```
+ */
 export default class Trie {
 
 	/** @private */
