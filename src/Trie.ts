@@ -13,7 +13,6 @@ export default class Trie {
 
 	/**
 	 * Returns total amount of words in the trie.
-	 * @returns Length of the trie.
 	 */
 	public get length(): number {
 		return this.__length;
