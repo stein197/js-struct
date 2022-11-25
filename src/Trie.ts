@@ -65,7 +65,17 @@ export default class Trie {
 		return this.__parent;
 	}
 
-	public toArray(): string[] {}
+	/**
+	 * Returns all words as an array.
+	 * @returns All words in the trie.
+	 */
+	public toArray(): string[] {
+		const result = new Array(this.__length);
+		let i = 0;
+		for (const prefix of this)
+			result[i++] = prefix;
+		return result;
+	}
 
 	public length(): number {}
 
