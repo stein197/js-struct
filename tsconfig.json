@@ -11,6 +11,7 @@
 		"allowUnusedLabels": false,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
+		"sourceMap": true,
 		"importsNotUsedAsValues": "error",
 		"lib": [
 			"ES2015"

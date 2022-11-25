@@ -2,11 +2,16 @@
 // TODO
 export default class Trie {
 
-	// TODO: Should it be replaced with Map with custom generic type?
-	private __children: {[key: string]: Trie} = {};
+	/** @private */
+	private readonly __children: {[key: string]: Trie} = {}; // TODO: Should it be replaced with Map with custom generic type?
+	/** @private */
 	private __parent: Trie | null = null;
+	/** @private */
 	private __end: boolean = false;
+	/** @private */
 	private __length: number = 0;
+
+	public constructor(private readonly __key: string = "") {}
 
 	public *[Symbol.iterator]() {}
 
@@ -58,32 +63,45 @@ export default class Trie {
 	}
 
 	/**
-	 * Adds a prefix to the trie.
-	 * @param prefix Prefix to add.
-	 * @param exact Should the insertion be exact. If set to `true` then the prefix will be inserted as a whole word
-	 *              (just like an adding string to an array).
+	 * Adds a prefix (word) to the trie.
+	 * @param prefix Prefix (word) to add.
 	 */
-	public addPrefix(prefix: string, exact: boolean = true): void {
-		if (exact && this.hasPrefix(prefix, true))
+	public addPrefix(prefix: string): void {
+		if (this.hasPrefix(prefix, true))
 			return;
 		let curPrefix: Trie = this;
 		for (const char of prefix) {
-			if (exact)
-				curPrefix.__length++;
+			curPrefix.__length++;
 			if (!curPrefix.__children[char]) {
-				const childPrefix = new Trie();
+				const childPrefix = new Trie(char);
 				childPrefix.__parent = curPrefix;
 				curPrefix.__children[char] = childPrefix;
 			}
 			curPrefix = curPrefix.__children[char];
 		}
-		if (!exact)
-			return;
 		curPrefix.__length++;
 		curPrefix.__end = true;
 	}
 
-	public removePrefix(prefix: string, exact: boolean = false) {}
+	/**
+	 * Removes a prefix (word) from the trie.
+	 * @param prefix Prefix (word) to remove.
+	 */
+	public removePrefix(prefix: string): void {
+		let curPrefix = this.getPrefix(prefix, true);
+		if (!curPrefix)
+			return;
+		curPrefix.__end = false;
+		while (curPrefix && curPrefix.__parent) {
+			curPrefix.__length--;
+			const parentPrefix: Trie = curPrefix.__parent;
+			if (!curPrefix.__length) {
+				curPrefix.__parent = null;
+				delete parentPrefix.__children[curPrefix.__key];
+			}
+			curPrefix = parentPrefix;
+		}
+	}
 
 	/**
 	 * Returns parent trie.
@@ -109,7 +127,13 @@ export default class Trie {
 		return result;
 	}
 
-	public length(): number {}
+	/**
+	 * Returns total amount of words in the trie.
+	 * @returns Length of the trie.
+	 */
+	public length(): number {
+		return this.__length;
+	}
 
 	/**
 	 * Creates a trie from a string array. Discards duplicates. The opposite of it is {@link Trie.toArray}
@@ -119,7 +143,7 @@ export default class Trie {
 	public static fromArray(data: string[]): Trie {
 		const result = new Trie();
 		for (const string of data)
-			result.addPrefix(string, true);
+			result.addPrefix(string);
 		return result;
 	}
 }
