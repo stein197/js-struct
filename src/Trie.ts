@@ -120,11 +120,7 @@ export default class Trie {
 	 * ```
 	 */
 	public toArray(): string[] {
-		const result = new Array(this.__length);
-		let i = 0;
-		for (const prefix of this)
-			result[i++] = prefix;
-		return result;
+		return [...this];
 	}
 
 	/**
