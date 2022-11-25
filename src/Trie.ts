@@ -11,6 +11,14 @@ export default class Trie {
 	/** @private */
 	private __length: number = 0;
 
+	/**
+	 * Returns total amount of words in the trie.
+	 * @returns Length of the trie.
+	 */
+	public get length(): number {
+		return this.__length;
+	}
+
 	public constructor(private readonly __key: string = "") {}
 
 	public *[Symbol.iterator]() {}
@@ -121,14 +129,6 @@ export default class Trie {
 	 */
 	public toArray(): string[] {
 		return [...this];
-	}
-
-	/**
-	 * Returns total amount of words in the trie.
-	 * @returns Length of the trie.
-	 */
-	public length(): number {
-		return this.__length;
 	}
 
 	/**
