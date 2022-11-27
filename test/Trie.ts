@@ -38,6 +38,23 @@ mocha.describe("Trie", () => {
 			t.addPrefix("First");
 			assert.equal(t.length, 3);
 		});
+		mocha.it("Should be the same after removing an empty string if the trie does not contain an empty one", () => {
+			const t = Trie.fromArray(["First", "Second", "Third"]);
+			t.removePrefix("");
+			assert.equal(t.length, 3);
+		});
+		mocha.it("Should decrease after removing an empty string if the trie contain an empty one", () => {
+			const t = Trie.fromArray(["First", "Second", "Third", ""]);
+			assert.equal(t.length, 4);
+			t.removePrefix("");
+			assert.equal(t.length, 3);
+		});
+		mocha.it("Should increase after adding an empty string", () => {
+			const t = Trie.fromArray(["First", "Second", "Third"]);
+			assert.equal(t.length, 3);
+			t.addPrefix("");
+			assert.equal(t.length, 4);
+		});
 		mocha.it("Should return correct number", () => {
 			const t = Trie.fromArray(["First", "Second", "Third"]);
 			assert.equal(t.length, 3);
@@ -146,9 +163,43 @@ mocha.describe("Trie", () => {
 			assert.equal(i, 3);
 			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
 		});
+		mocha.it("The loop should have the same amount of iterations after removing an empty string if the trie does not contain an empty one", () => {
+			const t = Trie.fromArray(["First", "Second", "Third"]);
+			let i = 0;
+			let array: string[] = [];
+			t.removePrefix("");
+			for (const word of t) {
+				i++;
+				array.push(word);
+			}
+			assert.equal(i, 3);
+			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
+		});
+		mocha.it("The loop should should decrease the amount of iterations after removing an empty string if the trie contain an empty one", () => {
+			const t = Trie.fromArray(["First", "Second", "Third", ""]);
+			let i = 0;
+			let array: string[] = [];
+			t.removePrefix("");
+			for (const word of t) {
+				i++;
+				array.push(word);
+			}
+			assert.equal(i, 3);
+			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
+		});
+		mocha.it("The loop should should increase the amount of iterations after adding an empty string", () => {
+			const t = Trie.fromArray(["First", "Second", "Third"]);
+			let i = 0;
+			let array: string[] = [];
+			t.addPrefix("");
+			for (const word of t) {
+				i++;
+				array.push(word);
+			}
+			assert.equal(i, 4);
+			assert.deepStrictEqual(array, ["", "First", "Second", "Third"]);
+		});
 	});
-	// TODO
-	mocha.describe("hasPrefix()", () => {});
 	// TODO
 	mocha.describe("getPrefix()", () => {});
 	// TODO
