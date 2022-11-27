@@ -29,7 +29,7 @@ mocha.describe("Trie", () => {
 			t.addPrefix("Fourth");
 			assert.equal(t.length, 4);
 		});
-		mocha.it("Should be the same after an adding existing non-final prefix", () => {
+		mocha.it("Should increase after an adding existing non-final prefix", () => {
 			const t = Trie.fromArray(["First", "Second", "Third"]);
 			t.addPrefix("Fi");
 			assert.equal(t.length, 4);
