@@ -14,12 +14,12 @@ mocha.describe("Trie", () => {
 			t.removePrefix("First");
 			assert.equal(t.length, 2);
 		});
-		mocha.it("Should be the same after an attemt to remove non-existing prefix", () => {
+		mocha.it("Should be the same after an attempt to remove non-existing prefix", () => {
 			const t = Trie.fromArray(["First", "Second", "Third"]);
 			t.removePrefix("Fourth");
 			assert.equal(t.length, 3);
 		});
-		mocha.it("Should be the same after an attemt to remove partial (not exact) prefix", () => {
+		mocha.it("Should be the same after an attempt to remove partial (not exact) prefix", () => {
 			const t = Trie.fromArray(["First", "Second", "Third"]);
 			t.removePrefix("Firs");
 			assert.equal(t.length, 3);
@@ -34,7 +34,7 @@ mocha.describe("Trie", () => {
 			t.addPrefix("Fi");
 			assert.equal(t.length, 4);
 		});
-		mocha.it("Should be the same after an attemt to add an existing prefix", () => {
+		mocha.it("Should be the same after an attempt to add an existing prefix", () => {
 			const t = Trie.fromArray(["First", "Second", "Third"]);
 			t.addPrefix("First");
 			assert.equal(t.length, 3);
