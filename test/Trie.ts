@@ -268,8 +268,12 @@ mocha.describe("Trie", () => {
 	mocha.describe("toArray()", () => {});
 	// TODO
 	mocha.describe("fromArray()", () => {});
-	// TODO
-	mocha.describe("create()", () => {});
+	mocha.describe("create()", () => {
+		mocha.it("Should create an empty trie", () => {
+			assert.equal(Trie.create().length, 0);
+			assert.equal([...Trie.create()].length, 0);
+		});
+	});
 	// TODO
 	mocha.describe("Data of the children", () => {});
 });
