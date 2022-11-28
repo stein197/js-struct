@@ -60,6 +60,7 @@ mocha.describe("Trie", () => {
 			assert.equal(t.length, 3);
 		});
 	});
+	// TODO: Test that iterator returns both keys and values
 	mocha.describe("*[Symbol.iterator]()", () => {
 		mocha.it("The loop should be empty when a trie is empty", () => {
 			const t = Trie.fromArray([]);
@@ -295,9 +296,9 @@ function create(): Trie {
 function iterate(trie: Trie): [number, string[]] {
 	let i = 0;
 	let result: string[] = [];
-	for (const word of trie) {
+	for (const [key] of trie) {
 		i++;
-		result.push(word);
+		result.push(key);
 	}
 	return [i, result];
 }

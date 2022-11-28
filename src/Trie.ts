@@ -57,7 +57,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	/**
 	 * Iterates over strings. Words are returning in alphabetical order.
 	 */
-	public *[Symbol.iterator](): Generator<string> {
+	public *[Symbol.iterator](): Generator<[string, T | null]> {
 		for (const trie of Trie.iterate(this)) {
 			let string = "";
 			let curTrie: Trie<T> | null = trie;
@@ -66,7 +66,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 				string = curTrie.__key + string;
 				curTrie = curTrie.__parent;
 			}
-			yield string;
+			yield [string, curValue];
 		}
 	}
 
@@ -197,17 +197,17 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	 * ```
 	 */
 	public toArray(): string[] {
-		return [...this];
+		return [...this].map(([key]) => key);
 	}
 
 	/**
 	 * Returns all words and their values as a plain map. It's the opposite of {@link Trie.fromMap}.
 	 * @returns All words and corresponding values.
 	 */
-	public toMap(): ObjectMap<T> {
-		const result: ObjectMap<T> = {};
-		for (const word of this)
-			result[word] = this.getValue(word)!;
+	public toMap(): ObjectMap<T | null> {
+		const result: ObjectMap<T | null> = {};
+		for (const [key, value] of this)
+			result[key] = value;
 		return result;
 	}
 
