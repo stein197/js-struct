@@ -60,7 +60,6 @@ mocha.describe("Trie", () => {
 			assert.equal(t.length, 3);
 		});
 	});
-	// TODO: Test that iterator returns both keys and values
 	mocha.describe("*[Symbol.iterator]()", () => {
 		mocha.it("The loop should be empty when a trie is empty", () => {
 			const t = Trie.fromArray([]);
@@ -141,6 +140,19 @@ mocha.describe("Trie", () => {
 			const [i, array] = iterate(t);
 			assert.equal(i, 4);
 			assert.deepStrictEqual(array, ["", "First", "Second", "Third"]);
+		});
+		mocha.it("Iterator should return both keys and values", () => {
+			const t = Trie.fromMap({
+				bot: 1,
+				bottle: 2
+			});
+			t.addPrefix("bottom");
+			t.setValue("bot", null);
+			t.setValue("bottom", 3);
+			let result: [string, number | null][] = [];
+			for (const entry of t)
+				result.push(entry);
+			assert.deepStrictEqual(result, [["bot", null], ["bottle", 2], ["bottom", 3]]);
 		});
 	});
 	mocha.describe("hasPrefix()", () => {

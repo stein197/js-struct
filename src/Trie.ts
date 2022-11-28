@@ -161,9 +161,9 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	/**
 	 * Sets a value associated with specified word.
 	 * @param prefix Word at which to set value.
-	 * @param value Value to set.
+	 * @param value Value to set or null to delete.
 	 */
-	public setValue(prefix: string, value: T): void {
+	public setValue(prefix: string, value: T | null): void {
 		const trie = this.getPrefix(prefix, true);
 		if (trie)
 			trie.__value = value;
