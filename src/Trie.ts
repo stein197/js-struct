@@ -229,7 +229,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	 * @param data Map to parse. Could be plain maps or {@link Map}.
 	 * @returns A trie that contains all strings and their corresponding values in {@link data}.
 	 */
-	public static fromMap<T>(data: ObjectMap<T>): Trie<T> {
+	public static fromMap<T>(data: ObjectMap<T | null>): Trie<T> {
 		const result = Trie.create<T>();
 		for (const key in data) {
 			result.addPrefix(key);
@@ -243,12 +243,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	 * @returns Cloned trie.
 	 */
 	public clone(): Trie<T> {
-		const result = Trie.create<T>();
-		for (const [prefix, value] of this) {
-			result.addPrefix(prefix);
-			result.setValue(prefix, value!);
-		}
-		return result;
+		return Trie.fromMap<T>(this.toMap());
 	}
 
 	/**
