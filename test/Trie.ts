@@ -271,9 +271,13 @@ mocha.describe("Trie", () => {
 	// TODO
 	mocha.describe("toArray()", () => {});
 	// TODO
+	mocha.describe("toMap()", () => {});
+	// TODO
 	mocha.describe("clone()", () => {});
 	// TODO
 	mocha.describe("fromArray()", () => {});
+	// TODO
+	mocha.describe("fromMap()", () => {});
 	mocha.describe("create()", () => {
 		mocha.it("Should create an empty trie", () => {
 			assert.equal(Trie.create().length, 0);

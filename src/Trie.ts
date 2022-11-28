@@ -1,4 +1,4 @@
-import type {Cloneable} from "@stein197/ts-util";
+import type {Cloneable, ObjectMap} from "@stein197/ts-util";
 
 // TODO: compressing
 // TODO: Make itarator return both prefix and corresponding value
@@ -61,6 +61,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 		for (const trie of Trie.iterate(this)) {
 			let string = "";
 			let curTrie: Trie<T> | null = trie;
+			const curValue = curTrie.__value;
 			while (curTrie) {
 				string = curTrie.__key + string;
 				curTrie = curTrie.__parent;
@@ -200,14 +201,40 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	}
 
 	/**
+	 * Returns all words and their values as a plain map. It's the opposite of {@link Trie.fromMap}.
+	 * @returns All words and corresponding values.
+	 */
+	public toMap(): ObjectMap<T> {
+		const result: ObjectMap<T> = {};
+		for (const word of this)
+			result[word] = this.getValue(word)!;
+		return result;
+	}
+
+
+	/**
 	 * Creates a trie from a string array. Discards duplicates. The opposite of it is {@link Trie.toArray}
 	 * @param data An array of strings.
 	 * @returns A trie that contains all strings in {@link data}.
 	 */
 	public static fromArray(data: string[]): Trie {
-		const result = new Trie("");
+		const result = Trie.create();
 		for (const string of data)
 			result.addPrefix(string);
+		return result;
+	}
+
+	/**
+	 * Creates a trie from map. The opposite of it is {@link Trie.toMap}.
+	 * @param data Map to parse. Could be plain maps or {@link Map}.
+	 * @returns A trie that contains all strings and their corresponding values in {@link data}.
+	 */
+	public static fromMap<T>(data: ObjectMap<T>): Trie<T> {
+		const result = Trie.create<T>();
+		for (const key in data) {
+			result.addPrefix(key);
+			result.setValue(key, data[key]);
+		}
 		return result;
 	}
 
@@ -217,9 +244,9 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	 */
 	public clone(): Trie<T> {
 		const result = Trie.create<T>();
-		for (const prefix of this) {
+		for (const [prefix, value] of this) {
 			result.addPrefix(prefix);
-			result.setValue(prefix, this.getValue(prefix)!);
+			result.setValue(prefix, value!);
 		}
 		return result;
 	}
