@@ -138,6 +138,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 		curPrefix.__end = true;
 	}
 
+	// TODO: Remove leaves
 	/**
 	 * Removes a prefix (word) from the trie.
 	 * @param prefix Prefix (word) to remove.
