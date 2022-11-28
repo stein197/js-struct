@@ -263,9 +263,15 @@ mocha.describe("Trie", () => {
 	// TODO
 	mocha.describe("removePrefix()", () => {});
 	// TODO
+	mocha.describe("setValue()", () => {});
+	// TODO
+	mocha.describe("getValue()", () => {});
+	// TODO
 	mocha.describe("getParent()", () => {});
 	// TODO
 	mocha.describe("toArray()", () => {});
+	// TODO
+	mocha.describe("clone()", () => {});
 	// TODO
 	mocha.describe("fromArray()", () => {});
 	mocha.describe("create()", () => {

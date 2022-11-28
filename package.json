@@ -27,5 +27,8 @@
     "mocha": "10.1.0",
     "ts-mocha": "10.0.0",
     "typescript": "4.9.3"
+  },
+  "dependencies": {
+    "@stein197/ts-util": "1.9.0"
   }
 }

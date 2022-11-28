@@ -1,4 +1,7 @@
+import type {Cloneable} from "@stein197/ts-util";
+
 // TODO: compressing
+// TODO: Make itarator return both prefix and corresponding value
 /**
  * Trie data structure. Allows to quickly search, insert and remove strings. Instead of storing strings in an array,
  * they could be stored in a trie. For example, this array:
@@ -20,17 +23,27 @@
  *          ╚═ L
  *             ╚═ E
  * ```
+ * The trie can also hold values like regular maps. By default tries don't contain any values and behave much like
+ * arrays. But you can store data associated with prefix much like maps:
+ * ```ts
+ * trie.setValue("apple", 10);
+ * trie.getValue("apple"); // 10
+ * ```
+ * Not that it works only with completed words, non-final prefixes cannot contain values.
+ * @typeParam T - Type of the values stored in a trie.
  */
-export default class Trie {
+export default class Trie<T = null> implements Cloneable<Trie<T>> {
 
 	/** @private */
-	private readonly __children: {[key: string]: Trie} = {}; // TODO: Should it be replaced with Map with custom generic type?
+	private readonly __children: {[key: string]: Trie<T>} = {}; // TODO: Should it be replaced with Map with custom generic type?
 	/** @private */
-	private __parent: Trie | null = null;
+	private __parent: Trie<T> | null = null;
 	/** @private */
 	private __end: boolean = false;
 	/** @private */
 	private __length: number = 0;
+	/** @private */
+	private __value: T | null = null;
 
 	/**
 	 * Returns total amount of words in the trie.
@@ -47,7 +60,7 @@ export default class Trie {
 	public *[Symbol.iterator](): Generator<string> {
 		for (const trie of Trie.iterate(this)) {
 			let string = "";
-			let curTrie: Trie | null = trie;
+			let curTrie: Trie<T> | null = trie;
 			while (curTrie) {
 				string = curTrie.__key + string;
 				curTrie = curTrie.__parent;
@@ -93,8 +106,8 @@ export default class Trie {
 	 * trie.getPrefix("app", false);   // Trie (at "app" position)
 	 * ```
 	 */
-	public getPrefix(prefix: string, exact: boolean = true): Trie | null {
-		let curPrefix: Trie | null = this;
+	public getPrefix(prefix: string, exact: boolean = true): Trie<T> | null {
+		let curPrefix: Trie<T> | null = this;
 		for (const char of prefix) {
 			curPrefix = curPrefix.__children[char];
 			if (!curPrefix)
@@ -110,11 +123,11 @@ export default class Trie {
 	public addPrefix(prefix: string): void {
 		if (this.hasPrefix(prefix, true))
 			return;
-		let curPrefix: Trie = this;
+		let curPrefix: Trie<T> = this;
 		for (const char of prefix) {
 			curPrefix.__length++;
 			if (!curPrefix.__children[char]) {
-				const childPrefix = new Trie(char);
+				const childPrefix = new Trie<T>(char);
 				childPrefix.__parent = curPrefix;
 				curPrefix.__children[char] = childPrefix;
 			}
@@ -135,7 +148,7 @@ export default class Trie {
 		curPrefix.__end = false;
 		while (curPrefix) {
 			curPrefix.__length--;
-			const parentPrefix: Trie | null = curPrefix.__parent;
+			const parentPrefix: Trie<T> | null = curPrefix.__parent;
 			if (!curPrefix.__length) {
 				curPrefix.__parent = null;
 				delete parentPrefix!.__children[curPrefix.__key];
@@ -145,10 +158,31 @@ export default class Trie {
 	}
 
 	/**
+	 * Sets a value associated with specified word.
+	 * @param prefix Word at which to set value.
+	 * @param value Value to set.
+	 */
+	public setValue(prefix: string, value: T): void {
+		const trie = this.getPrefix(prefix, true);
+		if (trie)
+			trie.__value = value;
+	}
+
+	/**
+	 * Returns a value associated with specified word.
+	 * @param prefix Associated word at which to return value.
+	 * @returns Value associated with word.
+	 */
+	public getValue(prefix: string): T | null {
+		const trie = this.getPrefix(prefix, true);
+		return trie?.__value ?? null;
+	}
+
+	/**
 	 * Returns parent trie.
 	 * @returns Parent trie of the current one or `null` if this is the root one.
 	 */
-	public getParent(): Trie | null {
+	public getParent(): Trie<T> | null {
 		return this.__parent;
 	}
 
@@ -178,14 +212,27 @@ export default class Trie {
 	}
 
 	/**
+	 * Performs deep clone.
+	 * @returns Cloned trie.
+	 */
+	public clone(): Trie<T> {
+		const result = Trie.create<T>();
+		for (const prefix of this) {
+			result.addPrefix(prefix);
+			result.setValue(prefix, this.getValue(prefix)!);
+		}
+		return result;
+	}
+
+	/**
 	 * Creates an empty trie.
 	 * @returns An empty trie.
 	 */
-	public static create(): Trie {
-		return new Trie("");
+	public static create<T = null>(): Trie<T> {
+		return new Trie<T>("");
 	}
 
-	private static *iterate(trie: Trie): Generator<Trie> {
+	private static *iterate<T>(trie: Trie<T>): Generator<Trie<T>> {
 		if (trie.__end)
 			yield trie;
 		for (const char in trie.__children)
