@@ -111,6 +111,11 @@ export default class Trie {
 		if (this.hasPrefix(prefix, true))
 			return;
 		let curPrefix: Trie = this;
+		let tmpPrefix = curPrefix.__parent;
+		while (tmpPrefix != null) {
+			tmpPrefix.__length++;
+			tmpPrefix = tmpPrefix.__parent;
+		}
 		for (const char of prefix) {
 			curPrefix.__length++;
 			if (!curPrefix.__children[char]) {
@@ -132,6 +137,11 @@ export default class Trie {
 		let curPrefix = this.getPrefix(prefix, true);
 		if (!curPrefix)
 			return;
+		let tmpPrefix = curPrefix.__parent;
+		while (tmpPrefix != null) {
+			tmpPrefix.__length--;
+			tmpPrefix = tmpPrefix.__parent;
+		}
 		curPrefix.__end = false;
 		while (curPrefix) {
 			curPrefix.__length--;
