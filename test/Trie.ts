@@ -141,6 +141,19 @@ mocha.describe("Trie", () => {
 			assert.equal(i, 4);
 			assert.deepStrictEqual(array, ["", "First", "Second", "Third"]);
 		});
+		mocha.it("Iterator should return both keys and values", () => {
+			const t = Trie.fromMap({
+				bot: 1,
+				bottle: 2
+			});
+			t.addPrefix("bottom");
+			t.setValue("bot", null);
+			t.setValue("bottom", 3);
+			let result: [string, number | null][] = [];
+			for (const entry of t)
+				result.push(entry);
+			assert.deepStrictEqual(result, [["bot", null], ["bottle", 2], ["bottom", 3]]);
+		});
 	});
 	mocha.describe("hasPrefix()", () => {
 		mocha.it("Should always return true for empty string (exact == false)", () => {
@@ -263,11 +276,21 @@ mocha.describe("Trie", () => {
 	// TODO
 	mocha.describe("removePrefix()", () => {});
 	// TODO
+	mocha.describe("setValue()", () => {});
+	// TODO
+	mocha.describe("getValue()", () => {});
+	// TODO
 	mocha.describe("getParent()", () => {});
 	// TODO
 	mocha.describe("toArray()", () => {});
 	// TODO
+	mocha.describe("toMap()", () => {});
+	// TODO
+	mocha.describe("clone()", () => {});
+	// TODO
 	mocha.describe("fromArray()", () => {});
+	// TODO
+	mocha.describe("fromMap()", () => {});
 	mocha.describe("create()", () => {
 		mocha.it("Should create an empty trie", () => {
 			assert.equal(Trie.create().length, 0);
@@ -285,9 +308,9 @@ function create(): Trie {
 function iterate(trie: Trie): [number, string[]] {
 	let i = 0;
 	let result: string[] = [];
-	for (const word of trie) {
+	for (const [key] of trie) {
 		i++;
-		result.push(word);
+		result.push(key);
 	}
 	return [i, result];
 }
