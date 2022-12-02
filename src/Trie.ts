@@ -151,11 +151,6 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 		let curPrefix = this.getPrefix(prefix, true);
 		if (!curPrefix)
 			return;
-		let tmpPrefix = curPrefix.__parent;
-		while (tmpPrefix != null) {
-			tmpPrefix.__length--;
-			tmpPrefix = tmpPrefix.__parent;
-		}
 		curPrefix.__end = false;
 		while (curPrefix) {
 			curPrefix.__length--;
