@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import * as mocha from "mocha";
-import Trie from "../src/Trie";
+import Trie = require("../src/Trie");
 
 mocha.describe("Trie", () => {
 	mocha.describe("get length()", () => {

@@ -31,7 +31,7 @@ import type {Cloneable, ObjectMap} from "@stein197/ts-util";
  * Not that it works only with completed words, non-final prefixes cannot contain values.
  * @typeParam T - Type of the values stored in a trie.
  */
-export default class Trie<T = null> implements Cloneable<Trie<T>> {
+class Trie<T = null> implements Cloneable<Trie<T>> {
 
 	/** @private */
 	private readonly __children: {[key: string]: Trie<T>} = {}; // TODO: Should it be replaced with Map with custom generic type?
@@ -297,3 +297,5 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 			yield* Trie.iterate(trie.__children[char]);
 	}
 }
+
+export = Trie;
