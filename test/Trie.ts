@@ -492,8 +492,6 @@ mocha.describe("Trie", () => {
 			assert.equal([...Trie.create()].length, 0);
 		});
 	});
-	// TODO
-	mocha.describe("Data of the children", () => {});
 });
 
 function createArrayed(): Trie {
