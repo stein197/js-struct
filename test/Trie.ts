@@ -289,8 +289,16 @@ mocha.describe("Trie", () => {
 	mocha.describe("setValue()", () => {});
 	// TODO
 	mocha.describe("getValue()", () => {});
-	// TODO
-	mocha.describe("getParent()", () => {});
+	mocha.describe("getParent()", () => {
+		mocha.it("Should return parent trie when the current one is not the root", () => {
+			const t = create();
+			assert.equal(t.getPrefix("F", false)!.getParent(), t);
+		});
+		mocha.it("Should return null when the current trie is root", () => {
+			const t = create();
+			assert.equal(t.getParent(), null);
+		});
+	});
 	// TODO
 	mocha.describe("toArray()", () => {});
 	// TODO
