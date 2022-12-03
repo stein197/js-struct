@@ -1,7 +1,6 @@
 import type {Cloneable, ObjectMap} from "@stein197/ts-util";
 
 // TODO: compressing
-// TODO: Make itarator return both prefix and corresponding value
 /**
  * Trie data structure. Allows to quickly search, insert and remove strings. Instead of storing strings in an array,
  * they could be stored in a trie. For example, this array:
