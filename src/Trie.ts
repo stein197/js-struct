@@ -45,6 +45,13 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	private __value: T | null = null;
 
 	/**
+	 * Returns Parent trie of the current one or `null` if this is the root one.
+	 */
+	public get parent(): Trie<T> | null {
+		return this.__parent;
+	}
+
+	/**
 	 * Returns `true` if the current trie is marked as end of prefix.
 	 */
 	public get end(): boolean {
@@ -52,17 +59,17 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	}
 
 	/**
-	 * Returns a key that the trie represent.
-	 */
-	public get key(): string {
-		return this.__key;
-	}
-
-	/**
 	 * Returns total amount of words in the trie.
 	 */
 	public get length(): number {
 		return this.__length;
+	}
+
+	/**
+	 * Returns a key that the trie represent.
+	 */
+	public get key(): string {
+		return this.__key;
 	}
 
 	private constructor(private readonly __key: string) {}
@@ -227,14 +234,6 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	public getValue(prefix: string): T | null {
 		const trie = this.getPrefix(prefix, true);
 		return trie?.__value ?? null;
-	}
-
-	/**
-	 * Returns parent trie.
-	 * @returns Parent trie of the current one or `null` if this is the root one.
-	 */
-	public getParent(): Trie<T> | null {
-		return this.__parent;
 	}
 
 	/**

@@ -3,7 +3,17 @@ import * as mocha from "mocha";
 import Trie = require("../src/Trie");
 
 mocha.describe("Trie", () => {
-	mocha.describe("get length()", () => {
+	mocha.describe("get parent", () => {
+		mocha.it("Should return parent trie when the current one is not the root", () => {
+			const t = createArrayed();
+			assert.equal(t.getPrefix("F", false)!.parent, t);
+		});
+		mocha.it("Should return null when the current trie is root", () => {
+			const t = createArrayed();
+			assert.equal(t.parent, null);
+		});
+	});
+	mocha.describe("get length", () => {
 		mocha.it("Should return 0 for empty trie", () => {
 			assert.equal(Trie.fromArray([]).length, 0);
 			assert.equal(Trie.create().length, 0);
@@ -403,16 +413,6 @@ mocha.describe("Trie", () => {
 		mocha.it("Should return correct result", () => {
 			const t = createMapped();
 			assert.equal(t.getValue("second"), 12);
-		});
-	});
-	mocha.describe("getParent()", () => {
-		mocha.it("Should return parent trie when the current one is not the root", () => {
-			const t = createArrayed();
-			assert.equal(t.getPrefix("F", false)!.getParent(), t);
-		});
-		mocha.it("Should return null when the current trie is root", () => {
-			const t = createArrayed();
-			assert.equal(t.getParent(), null);
 		});
 	});
 	mocha.describe("toArray()", () => {
