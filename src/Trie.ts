@@ -34,7 +34,7 @@ import type {Cloneable, ObjectMap} from "@stein197/ts-util";
 class Trie<T = null> implements Cloneable<Trie<T>> {
 
 	/** @private */
-	private readonly __children: {[key: string]: Trie<T>} = {}; // TODO: Should it be replaced with Map with custom generic type?
+	private __children: ObjectMap<Trie<T>> = {}; // TODO: Should it be replaced with Map with custom generic type?
 	/** @private */
 	private __parent: Trie<T> | null = null;
 	/** @private */
@@ -245,6 +245,24 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 		for (const [key, value] of this)
 			result[key] = value;
 		return result;
+	}
+
+	/**
+	 * Sorts the trie alphabetically or in reverse order.
+	 * @example
+	 * ```ts
+	 * Trie.fromArray(["ghi", "def", "abc"]).sort().toArray(); // ["abc", "def", "ghi"]
+	 * ```
+	 */
+	public sort(order: "asc" | "desc" = "asc"): void {
+		const newChildren: ObjectMap<Trie<T>> = {};
+		const keys = Object.keys(this.__children).sort((a, b) => (a < b ? -1 : 1) * (order === "asc" ? 1 : -1));
+		for (const key of keys) {
+			const child = this.__children[key];
+			child.sort(order);
+			newChildren[key] = child;
+		}
+		this.__children = newChildren;
 	}
 
 	/**

@@ -455,6 +455,18 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: null});
 		});
 	});
+	mocha.describe("sort", () => {
+		mocha.it("Should sort entries in ascending order", () => {
+			const t = Trie.fromArray(["abc", "ghi", "def"]);
+			t.sort("asc");
+			assert.deepStrictEqual(t.toArray(), ["abc", "def", "ghi"]);
+		});
+		mocha.it("Should sort entries in descending order", () => {
+			const t = Trie.fromArray(["abc", "ghi", "def"]);
+			t.sort("desc");
+			assert.deepStrictEqual(t.toArray(), ["ghi", "def", "abc"]);
+		});
+	});
 	mocha.describe("clone()", () => {
 		mocha.it("Should return an empty trie when cloning an empty one", () => {
 			const t = Trie.create().clone();
