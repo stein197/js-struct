@@ -9,37 +9,37 @@ mocha.describe("Trie", () => {
 			assert.equal(Trie.create().length, 0);
 		});
 		mocha.it("Should decrease after removing an existing prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("First");
 			assert.equal(t.length, 2);
 		});
 		mocha.it("Should be the same after an attempt to remove non-existing prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("Fourth");
 			assert.equal(t.length, 3);
 		});
 		mocha.it("Should be the same after an attempt to remove partial (not exact) prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("Firs");
 			assert.equal(t.length, 3);
 		});
 		mocha.it("Should increase after adding a prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("Fourth");
 			assert.equal(t.length, 4);
 		});
 		mocha.it("Should increase after an adding existing non-final prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("Fi");
 			assert.equal(t.length, 4);
 		});
 		mocha.it("Should be the same after an attempt to add an existing prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("First");
 			assert.equal(t.length, 3);
 		});
 		mocha.it("Should be the same after removing an empty string if the trie does not contain an empty one", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("");
 			assert.equal(t.length, 3);
 		});
@@ -50,23 +50,23 @@ mocha.describe("Trie", () => {
 			assert.equal(t.length, 3);
 		});
 		mocha.it("Should increase after adding an empty string", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.length, 3);
 			t.addPrefix("");
 			assert.equal(t.length, 4);
 		});
 		mocha.it("Should return correct number", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.length, 3);
 		});
 	});
 	mocha.describe("toString()", () => {
 		mocha.it("Should return empty string when stringifying root trie", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.toString(), "");
 		});
 		mocha.it("Should return correct result", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.getPrefix("Fi", false)!.toString(), "Fi");
 		});
 	});
@@ -78,42 +78,42 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(array, []);
 		});
 		mocha.it("The loop iterations count should be decreased after removing an existing prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("First");
 			const [i, array] = iterate(t);
 			assert.equal(i, 2);
 			assert.deepStrictEqual(array, ["Second", "Third"]);
 		});
 		mocha.it("The loop should have the same amount of iterations after an attempt to remove non-existing prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("Fourth");
 			const [i, array] = iterate(t);
 			assert.equal(i, 3);
 			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
 		});
 		mocha.it("The loop should have the same amount of iterations after an attempt to remove partial (not exact) prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("Firs");
 			const [i, array] = iterate(t);
 			assert.equal(i, 3);
 			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
 		});
 		mocha.it("The loop should increase the amount of iterations after adding a prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("Fourth");
 			const [i, array] = iterate(t);
 			assert.equal(i, 4);
 			assert.deepStrictEqual(array, ["First", "Fourth", "Second", "Third"]);
 		});
 		mocha.it("The loop should increase the amount of iterations after adding an existing non-final prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("Fi");
 			const [i, array] = iterate(t);
 			assert.equal(i, 4);
 			assert.deepStrictEqual(array, ["Fi", "First", "Second", "Third"]);
 		});
 		mocha.it("The loop should have the same amount of iterations after an attempt to add an existing prefix", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("First");
 			const [i, array] = iterate(t);
 			assert.equal(i, 3);
@@ -125,13 +125,13 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(array, ["abc", "def", "ghi"]);
 		});
 		mocha.it("The loop should have an expected amount of iterations", () => {
-			const t = create();
+			const t = createArrayed();
 			const [i, array] = iterate(t);
 			assert.equal(i, 3);
 			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
 		});
 		mocha.it("The loop should have the same amount of iterations after removing an empty string if the trie does not contain an empty one", () => {
-			const t = create();
+			const t = createArrayed();
 			t.removePrefix("");
 			const [i, array] = iterate(t);
 			assert.equal(i, 3);
@@ -145,7 +145,7 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
 		});
 		mocha.it("The loop should should increase the amount of iterations after adding an empty string", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("");
 			const [i, array] = iterate(t);
 			assert.equal(i, 4);
@@ -171,68 +171,68 @@ mocha.describe("Trie", () => {
 			assert.equal(t.hasPrefix("", false), true)
 		});
 		mocha.it("Should always return false for empty tries", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("a", false), false);
 		});
 		mocha.it("Should return true when searching for existing word (exact == true)", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("First", true), true);
 		});
 		mocha.it("Should return false when searching for non-existent word (exact == true)", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("Fourth", true), false);
 		});
 		mocha.it("Should return true when searching for existing prefix and exact == false", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("Fi", false), true);
 		});
 		mocha.it("Should return false when searching for non-existent prefix and exact == true", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("Fo", true), false);
 		});
 		mocha.it("Should return false when searching for non-existent prefix and exact == false", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("Fo", false), false);
 		});
 		mocha.it("Should return false for empty string when a trie does not contain it (exact == true)", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.hasPrefix("", true), false);
 		});
 		mocha.it("Should return false for empty string when a trie contain it (exact == true)", () => {
-			const t = create();
+			const t = createArrayed();
 			t.addPrefix("");
 			assert.equal(t.hasPrefix("", true), true);
 		});
 		mocha.describe("After adding an existing prefix", () => {
 			mocha.it("Should return true when searching for existing word (exact == true)", () => {
-				const t = create();
+				const t = createArrayed();
 				t.addPrefix("First");
 				assert.equal(t.hasPrefix("First", true), true);
 			});
 			mocha.it("Should return false when searching for non-existent word (exact == true)", () => {
-				const t = create();
+				const t = createArrayed();
 				t.addPrefix("First");
 				assert.equal(t.hasPrefix("Fourth", true), false);
 			});
 			mocha.it("Should return true when searching for existing prefix and exact == false", () => {
-				const t = create();
+				const t = createArrayed();
 				t.addPrefix("First");
 				assert.equal(t.hasPrefix("Fi", false), true);
 			});
 			mocha.it("Should return false when searching for non-existent prefix and exact == true", () => {
-				const t = create();
+				const t = createArrayed();
 				t.addPrefix("First");
 				assert.equal(t.hasPrefix("Fo", true), false);
 			});
 			mocha.it("Should return false when searching for non-existent prefix and exact == false", () => {
-				const t = create();
+				const t = createArrayed();
 				t.addPrefix("First");
 				assert.equal(t.hasPrefix("Fo", false), false);
 			});
 		});
 		mocha.describe("After removing an existing prefix", () => {
 			mocha.it("Should return false when searching for removed word (exact == true)", () => {
-				const t = create();
+				const t = createArrayed();
 				t.removePrefix("First");
 				assert.equal(t.hasPrefix("First", true), false);
 			});
@@ -246,34 +246,34 @@ mocha.describe("Trie", () => {
 		});
 		mocha.describe("After adding non-existent prefix", () => {
 			mocha.it("Should return true when searching for added word (exact == true)", () => {
-				const t = create();
+				const t = createArrayed();
 				t.addPrefix("Fourth");
 				assert.equal(t.hasPrefix("Fourth", true), true);
 			});
 		});
 		mocha.describe("After removing non-existent prefix", () => {
 			mocha.it("Should return true when searching for existing word (exact == true)", () => {
-				const t = create();
+				const t = createArrayed();
 				t.removePrefix("Fourth");
 				assert.equal(t.hasPrefix("First", true), true);
 			});
 			mocha.it("Should return false when searching for non-existent word (exact == true)", () => {
-				const t = create();
+				const t = createArrayed();
 				t.removePrefix("Fourth");
 				assert.equal(t.hasPrefix("Fourth", true), false);
 			});
 			mocha.it("Should return true when searching for existing prefix and exact == false", () => {
-				const t = create();
+				const t = createArrayed();
 				t.removePrefix("Fourth");
 				assert.equal(t.hasPrefix("Fi", false), true);
 			});
 			mocha.it("Should return false when searching for non-existent prefix and exact == true", () => {
-				const t = create();
+				const t = createArrayed();
 				t.removePrefix("Fourth");
 				assert.equal(t.hasPrefix("Fo", true), false);
 			});
 			mocha.it("Should return false when searching for non-existent prefix and exact == false", () => {
-				const t = create();
+				const t = createArrayed();
 				t.removePrefix("Fourth");
 				assert.equal(t.hasPrefix("Fo", false), false);
 			});
@@ -291,11 +291,11 @@ mocha.describe("Trie", () => {
 	mocha.describe("getValue()", () => {});
 	mocha.describe("getParent()", () => {
 		mocha.it("Should return parent trie when the current one is not the root", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.getPrefix("F", false)!.getParent(), t);
 		});
 		mocha.it("Should return null when the current trie is root", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.equal(t.getParent(), null);
 		});
 	});
@@ -315,7 +315,7 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(t.toMap(), {});
 		});
 		mocha.it("Should return an object with nulls when there are no values", () => {
-			const t = create();
+			const t = createArrayed();
 			assert.deepStrictEqual(t.toMap(), {First: null, Second: null, Third: null});
 		});
 		mocha.it("Should return an object equal to the one that is passed to Trie.fromMap()", () => {
@@ -359,7 +359,7 @@ mocha.describe("Trie", () => {
 	mocha.describe("Data of the children", () => {});
 });
 
-function create(): Trie {
+function createArrayed(): Trie {
 	return Trie.fromArray(["First", "Second", "Third"]);
 }
 
