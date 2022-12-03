@@ -119,11 +119,6 @@ mocha.describe("Trie", () => {
 			assert.equal(i, 3);
 			assert.deepStrictEqual(array, ["First", "Second", "Third"]);
 		});
-		mocha.it("The loop should iterate through a trie in alphabetical order", () => {
-			const t = Trie.fromArray(["ghi", "def", "abc"]);
-			const [, array] = iterate(t);
-			assert.deepStrictEqual(array, ["abc", "def", "ghi"]);
-		});
 		mocha.it("The loop should have an expected amount of iterations", () => {
 			const t = createArrayed();
 			const [i, array] = iterate(t);
@@ -424,10 +419,6 @@ mocha.describe("Trie", () => {
 		mocha.it("Should return an empty array when the trie is empty", () => {
 			const t = Trie.create();
 			assert.deepStrictEqual(t.toArray(), []);
-		});
-		mocha.it("Should return an array of words sorted alphabetically", () => {
-			const t = Trie.fromArray(["abc", "aab", "aba"]);
-			assert.deepStrictEqual(t.toArray(), ["aab", "aba", "abc"]);
 		});
 	});
 	mocha.describe("toMap()", () => {

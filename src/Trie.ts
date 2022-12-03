@@ -54,7 +54,7 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	private constructor(private readonly __key: string) {}
 
 	/**
-	 * Iterates over strings. Words are returning in alphabetical order.
+	 * Iterates over strings. Words are returning in order they were inserted.
 	 * @example
 	 * ```ts
 	 * for (const [prefix] of Trie.fromArray(["bot", "bottle", "bottom"]))
@@ -224,8 +224,8 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	}
 
 	/**
-	 * Returns all words as an array. It's the opposite of {@link Trie.fromArray}. Words will be returned in
-	 * alphabetical order.
+	 * Returns all words as an array. It's the opposite of {@link Trie.fromArray}. Words will be returned in order they
+	 * were inserted.
 	 * @returns All words in the trie.
 	 * @example
 	 * ```ts
