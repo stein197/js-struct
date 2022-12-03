@@ -247,6 +247,13 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 		return result;
 	}
 
+	/**
+	 * Performs deep clone.
+	 * @returns Cloned trie.
+	 */
+	public clone(): Trie<T> {
+		return Trie.fromMap<T>(this.toMap());
+	}
 
 	/**
 	 * Creates a trie from a string array. Discards duplicates. The opposite of it is {@link Trie.toArray}
@@ -272,14 +279,6 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 			result.setValue(key, data[key]);
 		}
 		return result;
-	}
-
-	/**
-	 * Performs deep clone.
-	 * @returns Cloned trie.
-	 */
-	public clone(): Trie<T> {
-		return Trie.fromMap<T>(this.toMap());
 	}
 
 	/**
