@@ -309,8 +309,40 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(t.toArray(), ["aab", "aba", "abc"]);
 		});
 	});
-	// TODO
-	mocha.describe("toMap()", () => {});
+	mocha.describe("toMap()", () => {
+		mocha.it("Should return an empty object when the trie is empty", () => {
+			const t = Trie.create();
+			assert.deepStrictEqual(t.toMap(), {});
+		});
+		mocha.it("Should return an object with nulls when there are no values", () => {
+			const t = create();
+			assert.deepStrictEqual(t.toMap(), {First: null, Second: null, Third: null});
+		});
+		mocha.it("Should return an object equal to the one that is passed to Trie.fromMap()", () => {
+			const t = createMapped();
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: 197});
+		});
+		mocha.it("Should return correct result after adding an entry", () => {
+			const t = createMapped();
+			t.addPrefix("fourth");
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: 197, fourth: null});
+		});
+		mocha.it("Should return correct result after removing an entry", () => {
+			const t = createMapped();
+			t.removePrefix("third");
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12});
+		});
+		mocha.it("Should return correct result after adding a value to a prefix", () => {
+			const t = createMapped();
+			t.setValue("third", 100);
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: 100});
+		});
+		mocha.it("Should return correct result after removing a valur from a prefix", () => {
+			const t = createMapped();
+			t.setValue("third", null);
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: null});
+		});
+	});
 	// TODO
 	mocha.describe("clone()", () => {});
 	// TODO
@@ -329,6 +361,14 @@ mocha.describe("Trie", () => {
 
 function create(): Trie {
 	return Trie.fromArray(["First", "Second", "Third"]);
+}
+
+function createMapped(): Trie<number> {
+	return Trie.fromMap({
+		first: 5,
+		second: 12,
+		third: 197
+	});
 }
 
 function iterate(trie: Trie): [number, string[]] {
