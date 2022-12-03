@@ -299,8 +299,16 @@ mocha.describe("Trie", () => {
 			assert.equal(t.getParent(), null);
 		});
 	});
-	// TODO
-	mocha.describe("toArray()", () => {});
+	mocha.describe("toArray()", () => {
+		mocha.it("Should return an empty array when the trie is empty", () => {
+			const t = Trie.create();
+			assert.deepStrictEqual(t.toArray(), []);
+		});
+		mocha.it("Should return an array of words sorted alphabetically", () => {
+			const t = Trie.fromArray(["abc", "aab", "aba"]);
+			assert.deepStrictEqual(t.toArray(), ["aab", "aba", "abc"]);
+		});
+	});
 	// TODO
 	mocha.describe("toMap()", () => {});
 	// TODO
