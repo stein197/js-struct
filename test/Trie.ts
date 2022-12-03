@@ -404,10 +404,26 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(tClone.toArray(), ["First", "Fourth", "Second", "Third"]);
 		});
 	});
-	// TODO
-	mocha.describe("fromArray()", () => {});
-	// TODO
-	mocha.describe("fromMap()", () => {});
+	mocha.describe("fromArray()", () => {
+		mocha.it("Should create an empty trie when an array is empty", () => {
+			const t = Trie.fromArray([]);
+			assert.deepStrictEqual(t.toArray(), []);
+		});
+		mocha.it("Should create a trie with specified entries", () => {
+			const t = Trie.fromArray(["first", "second", "third"]);
+			assert.deepStrictEqual(t.toArray(), ["first", "second", "third"]);
+		});
+	});
+	mocha.describe("fromMap()", () => {
+		mocha.it("Should create an empty trie when a map is empty", () => {
+			const t = Trie.fromMap({});
+			assert.deepStrictEqual(t.toMap(), {});
+		});
+		mocha.it("Should create a trie with specified entries", () => {
+			const t = Trie.fromMap({first: 5, second: 12, third: 197});
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: 197});
+		});
+	});
 	mocha.describe("create()", () => {
 		mocha.it("Should create an empty trie", () => {
 			assert.equal(Trie.create().length, 0);
