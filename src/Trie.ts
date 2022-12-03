@@ -95,7 +95,7 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 		let result = "";
 		let curTrie: Trie<T> | null = this;
 		while (curTrie) {
-			result = curTrie.__value + result;
+			result = curTrie.__key + result;
 			curTrie = curTrie.__parent;
 		}
 		return result;

@@ -61,7 +61,16 @@ mocha.describe("Trie", () => {
 		});
 	});
 	// TODO
-	mocha.describe("toString()", () => {});
+	mocha.describe("toString()", () => {
+		mocha.it("Should return empty string when stringifying root trie", () => {
+			const t = create();
+			assert.equal(t.toString(), "");
+		});
+		mocha.it("Should return correct result", () => {
+			const t = create();
+			assert.equal(t.getPrefix("Fi", false)!.toString(), "Fi");
+		});
+	});
 	mocha.describe("*[Symbol.iterator]()", () => {
 		mocha.it("The loop should be empty when a trie is empty", () => {
 			const t = Trie.fromArray([]);
