@@ -279,7 +279,7 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	 * @returns A trie that contains all strings in {@link data}.
 	 */
 	public static fromArray(data: string[]): Trie {
-		const result = Trie.create();
+		const result = this.create();
 		for (const string of data)
 			result.addPrefix(string);
 		return result;
@@ -291,7 +291,7 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	 * @returns A trie that contains all strings and their corresponding values in {@link data}.
 	 */
 	public static fromMap<T>(data: ObjectMap<T | null>): Trie<T> {
-		const result = Trie.create<T>();
+		const result = this.create<T>();
 		for (const key in data) {
 			result.addPrefix(key);
 			result.setValue(key, data[key]);
@@ -304,14 +304,14 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	 * @returns An empty trie.
 	 */
 	public static create<T = null>(): Trie<T> {
-		return new Trie<T>("");
+		return new this<T>("");
 	}
 
 	private static *iterate<T>(trie: Trie<T>): Generator<Trie<T>> {
 		if (trie.__end)
 			yield trie;
 		for (const char in trie.__children)
-			yield* Trie.iterate(trie.__children[char]);
+			yield* this.iterate(trie.__children[char]);
 	}
 }
 
