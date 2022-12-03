@@ -60,7 +60,6 @@ mocha.describe("Trie", () => {
 			assert.equal(t.length, 3);
 		});
 	});
-	// TODO
 	mocha.describe("toString()", () => {
 		mocha.it("Should return empty string when stringifying root trie", () => {
 			const t = create();
