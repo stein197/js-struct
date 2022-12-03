@@ -341,12 +341,32 @@ mocha.describe("Trie", () => {
 				assert.equal(t.getPrefix("bot", true), null);
 				assert.equal(t.getPrefix("bottle", true)!.toString(), "bottle");
 			});
-		});		
+		});	
 	});
-	// TODO
-	mocha.describe("addPrefix()", () => {});
-	// TODO
-	mocha.describe("removePrefix()", () => {});
+	mocha.describe("addPrefix()", () => {
+		mocha.it("Should add a prefix when adding nonexistent prefix", () => {
+			const t = createArrayed();
+			t.addPrefix("Fourth");
+			assert.deepStrictEqual(t.toArray(), ["First", "Fourth", "Second", "Third"]);
+		});
+		mocha.it("Should not add a prefix when adding existent prefix", () => {
+			const t = createArrayed();
+			t.addPrefix("First");
+			assert.deepStrictEqual(t.toArray(), ["First", "Second", "Third"]);
+		});
+	});
+	mocha.describe("removePrefix()", () => {
+		mocha.it("Should remove prefix when removing existing prefix", () => {
+			const t = createArrayed();
+			t.removePrefix("First");
+			assert.deepStrictEqual(t.toArray(), ["Second", "Third"]);
+		});
+		mocha.it("Should not remove prefix when removing nonexistent prefix", () => {
+			const t = createArrayed();
+			t.removePrefix("Fourth");
+			assert.deepStrictEqual(t.toArray(), ["First", "Second", "Third"]);
+		});
+	});
 	mocha.describe("setValue()", () => {
 		mocha.it("Cannot set a value for non-final prefix", () => {
 			const t = createMapped();
