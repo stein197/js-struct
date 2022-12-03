@@ -71,6 +71,25 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 	}
 
 	/**
+	 * Stringifies the current trie - returns the string path from the root trie till the current trie.
+	 * @returns The full string path from the root till the current trie.
+	 * @example
+	 * ```ts
+	 * const t = Trie.fromArray(["bot", "bottle"]);
+	 * t.getPrefix("bott", false).toString(); // "bott"
+	 * ```
+	 */
+	public toString(): string {
+		let result = "";
+		let curTrie: Trie<T> | null = this;
+		while (curTrie) {
+			result = curTrie.__value + result;
+			curTrie = curTrie.__parent;
+		}
+		return result;
+	}
+
+	/**
 	 * Searches for a passed string.
 	 * @param prefix String to search.
 	 * @param exact Should the searching be exact. If set to `true` then it will be searched to exactly match the

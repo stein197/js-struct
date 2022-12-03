@@ -60,6 +60,8 @@ mocha.describe("Trie", () => {
 			assert.equal(t.length, 3);
 		});
 	});
+	// TODO
+	mocha.describe("toString()", () => {});
 	mocha.describe("*[Symbol.iterator]()", () => {
 		mocha.it("The loop should be empty when a trie is empty", () => {
 			const t = Trie.fromArray([]);
