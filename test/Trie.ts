@@ -198,7 +198,7 @@ mocha.describe("Trie", () => {
 			const t = createArrayed();
 			assert.equal(t.hasPrefix("", true), false);
 		});
-		mocha.it("Should return false for empty string when a trie contain it (exact == true)", () => {
+		mocha.it("Should return true for empty string when a trie contain it (exact == true)", () => {
 			const t = createArrayed();
 			t.addPrefix("");
 			assert.equal(t.hasPrefix("", true), true);
