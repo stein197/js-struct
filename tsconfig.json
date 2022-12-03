@@ -11,6 +11,7 @@
 		"esModuleInterop": true,
 		"noUnusedParameters": true,
 		"allowUnusedLabels": false,
+		"inlineSources": true,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 		"sourceMap": true,
