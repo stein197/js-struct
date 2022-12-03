@@ -286,9 +286,21 @@ mocha.describe("Trie", () => {
 	// TODO
 	mocha.describe("removePrefix()", () => {});
 	// TODO
-	mocha.describe("setValue()", () => {});
-	// TODO
-	mocha.describe("getValue()", () => {});
+	mocha.describe("getValue()", () => {
+		mocha.it("Should return null when getting a value from non-final prefix", () => {
+			const t = createMapped();
+			assert.equal(t.getValue(""), null);
+			assert.equal(t.getValue("fourth"), null);
+		});
+		mocha.it("Should return null when getting the corresponding prefix does not have a value", () => {
+			const t = createArrayed();
+			assert.equal(t.getValue("First"), null);
+		});
+		mocha.it("Should return correct result", () => {
+			const t = createMapped();
+			assert.equal(t.getValue("second"), 12);
+		});
+	});
 	mocha.describe("getParent()", () => {
 		mocha.it("Should return parent trie when the current one is not the root", () => {
 			const t = createArrayed();
