@@ -467,6 +467,20 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(t.toArray(), ["ghi", "def", "abc"]);
 		});
 	});
+	mocha.describe("traverse()", () => {
+		mocha.it("Should traverse in pre-order", () => {
+			const t = Trie.fromArray(["fba", "fbdc", "fbde", "fgih"]);
+			let result = "";
+			t.traverse("nlr", node => result += node.key);
+			assert.equal(result, "fbadcegih");
+		});
+		mocha.it("Should traverse in post-order", () => {
+			const t = Trie.fromArray(["fba", "fbdc", "fbde", "fgih"]);
+			let result = "";
+			t.traverse("lrn", node => result += node.key);
+			assert.equal(result, "acedbhigf");
+		});
+	});
 	mocha.describe("clone()", () => {
 		mocha.it("Should return an empty trie when cloning an empty one", () => {
 			const t = Trie.create().clone();

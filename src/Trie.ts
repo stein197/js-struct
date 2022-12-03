@@ -45,6 +45,20 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 	private __value: T | null = null;
 
 	/**
+	 * Returns `true` if the current trie is marked as end of prefix.
+	 */
+	public get end(): boolean {
+		return this.__end;
+	}
+
+	/**
+	 * Returns a key that the trie represent.
+	 */
+	public get key(): string {
+		return this.__key;
+	}
+
+	/**
 	 * Returns total amount of words in the trie.
 	 */
 	public get length(): number {
@@ -263,6 +277,22 @@ class Trie<T = null> implements Cloneable<Trie<T>> {
 			newChildren[key] = child;
 		}
 		this.__children = newChildren;
+	}
+
+	/**
+	 * Traverses over the trie.
+	 * @param order Order in which to traverse the trie. Could be a pre-order ("nlr") or a post-order ("lrn").
+	 * @param handler Function to be called at each trie node.
+	 */
+	public traverse(order: "nlr" | "lrn", handler: (trie: Trie<T>) => void): void {
+		for (let k in this.__children) {
+			const child = this.__children[k];
+			if (order === "nlr")
+				handler(child);
+			child.traverse(order, handler);
+			if (order === "lrn")
+				handler(child);
+		}
 	}
 
 	/**
