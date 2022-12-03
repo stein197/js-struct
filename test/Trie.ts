@@ -343,8 +343,28 @@ mocha.describe("Trie", () => {
 			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: null});
 		});
 	});
-	// TODO
-	mocha.describe("clone()", () => {});
+	mocha.describe("clone()", () => {
+		mocha.it("Should return an empty trie when cloning an empty one", () => {
+			const t = Trie.create().clone();
+			assert.deepStrictEqual(t.toMap(), {});
+		});
+		mocha.it("Should return correct result", () => {
+			const t = createMapped().clone();
+			assert.deepStrictEqual(t.toMap(), {first: 5, second: 12, third: 197});
+		});
+		mocha.it("Should return different object reference", () => {
+			const t = createArrayed();
+			const tClone = t.clone();
+			assert.notEqual(t, tClone);
+		});
+		mocha.it("Should not affect the original trie when modifying a cloned one", () => {
+			const t = createArrayed();
+			const tClone = t.clone()
+			tClone.addPrefix("Fourth");
+			assert.deepStrictEqual(t.toArray(), ["First", "Second", "Third"]);
+			assert.deepStrictEqual(tClone.toArray(), ["First", "Fourth", "Second", "Third"]);
+		});
+	});
 	// TODO
 	mocha.describe("fromArray()", () => {});
 	// TODO
