@@ -285,7 +285,34 @@ mocha.describe("Trie", () => {
 	mocha.describe("addPrefix()", () => {});
 	// TODO
 	mocha.describe("removePrefix()", () => {});
-	// TODO
+	mocha.describe("setValue()", () => {
+		mocha.it("Cannot set a value for non-final prefix", () => {
+			const t = createMapped();
+			t.setValue("fi", 12);
+			assert.equal(t.getValue("fi"), null);
+		});
+		mocha.it("Cannot set a value for nonexistent prefix", () => {
+			const t = createMapped();
+			t.setValue("fourth", 12);
+			assert.equal(t.getValue("fourth"), null);
+		});
+		mocha.it("Should return null after unsetting a value for a prefix that had one", () => {
+			const t = createMapped();
+			t.setValue("first", null);
+			assert.equal(t.getValue("first"), null);
+		});
+		mocha.it("Should return new value after updatding a value for a prefix that had one", () => {
+			const t = createMapped();
+			t.setValue("first", 12);
+			assert.equal(t.getValue("first"), 12);
+		});
+		mocha.it("Should return value after setting a value for a prefix that didn't have one", () => {
+			const t = createMapped();
+			t.addPrefix("fourth");
+			t.setValue("fourth", 12);
+			assert.equal(t.getValue("fourth"), 12);
+		});
+	});
 	mocha.describe("getValue()", () => {
 		mocha.it("Should return null when getting a value from non-final prefix", () => {
 			const t = createMapped();
