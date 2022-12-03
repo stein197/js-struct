@@ -56,6 +56,19 @@ export default class Trie<T = null> implements Cloneable<Trie<T>> {
 
 	/**
 	 * Iterates over strings. Words are returning in alphabetical order.
+	 * @example
+	 * ```ts
+	 * for (const [prefix] of Trie.fromArray(["bot", "bottle", "bottom"]))
+	 * 	console.log(prefix);
+	 * > "bot"
+	 * > "bottle"
+	 * > "bottom"
+	 * for (const [prefix, value] of Trie.fromMap({First: 1, Second: 2, Third: 3}))
+	 * 	console.log(prefix, value);
+	 * > "First" 1
+	 * > "Second" 2
+	 * > "Third" 3
+	 * ```
 	 */
 	public *[Symbol.iterator](): Generator<[string, T | null]> {
 		for (const trie of Trie.iterate(this)) {
